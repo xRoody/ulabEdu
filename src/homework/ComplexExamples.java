@@ -56,17 +56,14 @@ public class ComplexExamples {
             new Person(8, "Amelia"),
     };
 
-    public interface TwoNumbersDTO {
-        Integer getFirst();
-
-        Integer getSecond();
-    }
 
     @Data
     @AllArgsConstructor
-    private static class SumDTO implements TwoNumbersDTO {
+    private static class SumDTO  {
         private Integer first;
         private Integer second;
+
+
 
         @Override
         public String toString() {
@@ -93,7 +90,7 @@ public class ComplexExamples {
                 .toString();
     }
 
-    public static TwoNumbersDTO getTwoWithSum(Integer[] arr, Integer sum) {
+    public static SumDTO getTwoWithSum(Integer[] arr, Integer sum) {
         if (arr == null || sum == null) return null;
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = i + 1; j < arr.length; j++) {

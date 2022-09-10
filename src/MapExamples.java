@@ -1,16 +1,12 @@
 import dto.Author;
 import dto.Book;
-import lombok.extern.slf4j.Slf4j;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
 
-@Slf4j
+
 public class MapExamples {
     public static void main(String[] args) {
         Author kant = new Author();
