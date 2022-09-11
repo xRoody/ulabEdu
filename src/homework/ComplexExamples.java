@@ -76,7 +76,7 @@ public class ComplexExamples {
     public static void main(String[] args) {
         System.out.println(arrayOfPersonToString(RAW_DATA));
         System.out.println(getTwoWithSum(new Integer[]{3, 4, 2, 7}, 10));
-        System.out.println(getTwoWithSumWithSet(new Integer[]{3, 4, 2, 7}, 10));
+        System.out.println(getTwoWithSumWithSet(new Integer[]{3, 4, 2, 5}, 10));
         System.out.println();
         System.out.println(fuzzySearch("hw", "cartwheelllllaaa"));
         System.out.println(fuzzySearchRegex("hw", "cartwheelllllaaa"));
@@ -107,9 +107,13 @@ public class ComplexExamples {
 
     public static SumDTO getTwoWithSumWithSet(Integer[] arr, Integer sum) {
         if (arr == null || sum == null) return null;
-        Set<Integer> set=Arrays.stream(arr).collect(Collectors.toSet());
-        for (Integer i:arr) {
-            if (set.contains(sum-i)) return new SumDTO(i, sum-i);
+        Map<Integer, Integer> map=new HashMap<>();
+        for (Integer integer : arr) {
+            if (!map.containsKey(integer)) map.put(integer, 1);
+            else map.put(integer, 2);
+        }
+        for (Integer integer : arr) {
+            if (map.containsKey(sum - integer) && (sum - integer!=integer || map.get(integer)==2)) return new SumDTO(integer, sum-integer);
         }
         return null;
     }
