@@ -3,7 +3,9 @@ package homework;
 import lombok.*;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -42,27 +44,27 @@ public class ComplexExamples {
     }
 
     private static Person[] RAW_DATA = new Person[]{
-            new Person(0, "Harry"),
-            new Person(0, "Harry"), // дубликат
-            new Person(1, "Harry"), // тёзка
-            new Person(2, "Harry"),
-            new Person(3, "Emily"),
-            new Person(4, "Jack"),
-            new Person(4, "Jack"),
-            new Person(5, "Amelia"),
             new Person(5, "Amelia"),
             new Person(6, "Amelia"),
             new Person(7, "Amelia"),
+            new Person(0, "Harry"),
+            new Person(1, "Harry"),
             new Person(8, "Amelia"),
+            new Person(0, "Harry"),
+            new Person(4, "Jack"),
+            new Person(2, "Harry"),
+            new Person(3, "Emily"),
+            new Person(4, "Jack"),
+            new Person(5, "Amelia"),
+
     };
 
 
     @Data
     @AllArgsConstructor
-    private static class SumDTO  {
+    public static class SumDTO {
         private Integer first;
         private Integer second;
-
 
 
         @Override
@@ -74,8 +76,11 @@ public class ComplexExamples {
     public static void main(String[] args) {
         System.out.println(arrayOfPersonToString(RAW_DATA));
         System.out.println(getTwoWithSum(new Integer[]{3, 4, 2, 7}, 10));
+        System.out.println(getTwoWithSumWithSet(new Integer[]{3, 4, 2, 7}, 10));
         System.out.println();
         System.out.println(fuzzySearch("hw", "cartwheelllllaaa"));
+        System.out.println(fuzzySearchRegex("hw", "cartwheelllllaaa"));
+        System.out.println();
     }
 
     public static String arrayOfPersonToString(Person[] arr) {
@@ -100,6 +105,15 @@ public class ComplexExamples {
         return null;
     }
 
+    public static SumDTO getTwoWithSumWithSet(Integer[] arr, Integer sum) {
+        if (arr == null || sum == null) return null;
+        Set<Integer> set=Arrays.stream(arr).collect(Collectors.toSet());
+        for (Integer i:arr) {
+            if (set.contains(sum-i)) return new SumDTO(i, sum-i);
+        }
+        return null;
+    }
+
     public static boolean fuzzySearch(String example, String target) {
         if (example == null && target == null) return true;
         if (example == null || target == null) return false;
@@ -110,5 +124,14 @@ public class ComplexExamples {
             }
         }
         return i == example.length();
+    }
+
+    public static boolean fuzzySearchRegex(String example, String target) {
+        StringBuilder sb = new StringBuilder(".*");
+        for (int j = 0; j < example.length(); j++) {
+            sb.append("[").append(example.charAt(j)).append("]").append(".*");
+        }
+        Pattern pattern = Pattern.compile(sb.toString());
+        return pattern.matcher(target).matches();
     }
 }
