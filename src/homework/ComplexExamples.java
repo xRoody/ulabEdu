@@ -87,6 +87,7 @@ public class ComplexExamples {
         if (arr == null || arr.length == 0) return "";
         return Arrays.stream(RAW_DATA)
                 .distinct()
+                .filter(x->x!=null && x.getName()!=null)
                 .sorted(Comparator.comparingInt(Person::getId))
                 .collect(groupingBy(Person::getName, Collectors.reducing(0, (x) -> 1, Integer::sum)))
                 .entrySet()
@@ -109,6 +110,7 @@ public class ComplexExamples {
         if (arr == null || sum == null) return null;
         Map<Integer, Integer> map=new HashMap<>();
         for (Integer integer : arr) {
+            if (integer==null) continue;
             if (!map.containsKey(integer)) map.put(integer, 1);
             else map.put(integer, 2);
         }
